@@ -1,4 +1,5 @@
 import { Button } from './components/ui/Button';
+import { PlusIcon } from './icons/PlusIcon';
 
 function App() {
   return (
@@ -8,8 +9,26 @@ function App() {
         size={'sm'}
         text={'Add Content'}
         onClick={() => {}}
-        startIcon='+'
-        endIcon='-'
+        startIcon={<PlusIcon size='sm' />}
+        endIcon={<PlusIcon size='lg' />}
+      />
+      <Button
+        variant={'secondary'}
+        size={'sm'}
+        text={'Add Content'}
+        onClick={() => {}}
+      />
+      <Button
+        variant={'primary'}
+        size={'md'}
+        text={'Add Content'}
+        onClick={() => {}}
+      />
+      <Button
+        variant={'primary'}
+        size={'lg'}
+        text={'Add Content'}
+        onClick={() => {}}
       />
     </div>
   );
