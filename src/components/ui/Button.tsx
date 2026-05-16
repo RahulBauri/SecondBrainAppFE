@@ -10,17 +10,20 @@ interface ButtonProps {
 }
 
 const variantStyles = {
-  primary: 'bg-[var(--color-purple-500)] text-white',
-  secondary: 'bg-[var(--color-purple-300)] text-[var(--color-purple-600)]',
+  primary:
+    'bg-[var(--color-purple-500)] text-white hover:shadow-xl hover:shadow-purple-400',
+  secondary:
+    'bg-[var(--color-purple-300)] text-[var(--color-purple-600)] hover:shadow-xl hover:shadow-purple-400',
 };
 
 const sizeStyles = {
-  sm: 'py-1 px-2',
-  md: 'py-2 px-4',
-  lg: 'py-4 px-6',
+  sm: 'py-1 px-2 text-sm rounded-sm',
+  md: 'py-2 px-4 text-md rounded-md',
+  lg: 'py-4 px-6 text-lg rounded-lg',
 };
 
-const defaultStyles = 'rounded-md flex items-center';
+const defaultStyles =
+  'font-light flex items-center shadow-md shadow-purple-300';
 
 export const Button = (props: ButtonProps) => {
   return (
