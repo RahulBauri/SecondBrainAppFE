@@ -1,12 +1,16 @@
+import { useState } from 'react';
 import { Button } from './components/ui/Button';
 import { Card } from './components/ui/Card';
+import { CreateContentModal } from './components/ui/CreateContentModal';
 import { Sidebar } from './components/ui/Sidebar';
 import { PlusIcon } from './icons/PlusIcon';
 import { ShareIcon } from './icons/ShareIcon';
 
 function App() {
+  const [open, setOpen] = useState(false);
   return (
     <div>
+      <CreateContentModal open={open} onClose={setOpen} />
       <div className='w-[90vw] h-screen my-0 mx-auto py-8'>
         <div className='flex justify-between items-center'>
           {/* Header */}
@@ -23,7 +27,9 @@ function App() {
               variant={'primary'}
               size={'lg'}
               text={'Add Content'}
-              onClick={() => {}}
+              onClick={() => {
+                setOpen(true);
+              }}
               startIcon={<PlusIcon size='lg' />}
             />
           </div>
