@@ -11,7 +11,7 @@ interface CardProps {
 
 export const Card = (props: CardProps) => {
   return (
-    <div className='bg-white rounded-md border border-gray-200 w-104 max-w-120 p-4'>
+    <div className='bg-white rounded-md border border-gray-200 w-104 max-w-120 p-4 hover:bg-gray-200'>
       <div className='flex justify-between items-center'>
         <div className='flex items-center gap-2'>
           <div className='text-gray-500'>

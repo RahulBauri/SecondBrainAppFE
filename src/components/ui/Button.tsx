@@ -7,6 +7,8 @@ interface ButtonProps {
   startIcon?: ReactElement;
   endIcon?: ReactElement;
   onClick: () => void;
+  fullWidth?: boolean;
+  loading?: boolean;
 }
 
 const variantStyles = {
@@ -23,12 +25,13 @@ const sizeStyles = {
 };
 
 const defaultStyles =
-  'font-light flex items-center shadow-md shadow-purple-300';
+  'font-light flex items-center justify-center shadow-md shadow-purple-300 cursor-pointer';
 
 export const Button = (props: ButtonProps) => {
   return (
     <button
-      className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}
+      className={`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]} ${props.fullWidth ? ' w-full' : ''} ${props.loading ? ' opacity-45' : ''}`}
+      disabled={props.loading}
       onClick={props.onClick}
     >
       {props.startIcon ? <div className='pr-2'>{props.startIcon}</div> : null}
