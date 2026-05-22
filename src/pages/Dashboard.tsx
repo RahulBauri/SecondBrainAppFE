@@ -1,13 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
 import { CreateContentModal } from '../components/ui/CreateContentModal';
 import { Sidebar } from '../components/ui/Sidebar';
 import { PlusIcon } from '../icons/PlusIcon';
 import { ShareIcon } from '../icons/ShareIcon';
+import axios from 'axios';
+import { BACKEND_URL } from '../config';
 
 export function Dashboard() {
   const [open, setOpen] = useState(false);
+  const [content, setContent] = useState([]);
+
+  async function fetchContent() {
+    const resp = await axios.get(`${BACKEND_URL}/api/v1/content`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      withCredentials: true,
+    });
+
+    console.log(resp.data);
+
+    setContent(resp.data.content);
+  }
+
+  useEffect(() => {
+    fetchContent();
+  }, [content]);
+
   return (
     <div>
       <CreateContentModal open={open} onClose={setOpen} />
@@ -25,7 +46,23 @@ export function Dashboard() {
                 variant={'secondary'}
                 size={'lg'}
                 text={'Share Brain'}
-                onClick={() => {}}
+                onClick={async () => {
+                  const resp = await axios.post(
+                    `${BACKEND_URL}/api/v1/brain/share`,
+                    {
+                      share: true,
+                    },
+                    {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                      },
+                      withCredentials: true,
+                    },
+                  );
+
+                  const shareUrl = `http://localhost:5173/share/${resp.data.hash}`;
+                  alert(shareUrl);
+                }}
                 startIcon={<ShareIcon size='lg' />}
               />
               <Button
@@ -41,20 +78,19 @@ export function Dashboard() {
           </div>
           <div className='grid grid-cols-3 gap-2 mt-8'>
             {/* Cards */}
-            <Card
-              title='
-The Worst SWAT Hostage Rescue ft. Jesse & Omie'
-              link='https://www.youtube.com/watch?v=52AzpksaMKs'
-              type='youtube'
-            />
-            <Card
-              title='
-Hey 
-@grok
- remove the worst person'
-              link='https://x.com/ElonMuskAOC/status/2055286489911853063'
-              type='twitter'
-            />
+            {content.map((singleContent) => {
+              const {
+                _id,
+                link,
+                type,
+                title,
+                userId: { username },
+              } = singleContent;
+
+              // console.log(link, type, title, username);
+
+              return <Card title={title} link={link} type={type} />;
+            })}
           </div>
         </div>
       </div>

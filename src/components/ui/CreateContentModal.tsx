@@ -11,7 +11,7 @@ export function CreateContentModal({
   return (
     <div>
       {open && (
-        <div className='w-screen h-screen bg-black/50 fixed top-0 left-0 flex justify-center items-center'>
+        <div className='w-screen h-screen bg-black/70 fixed top-0 left-0 flex justify-center items-center'>
           <div className='w-100 h-100 bg-white p-4 rounded'>
             {/* Header */}
             <div className='flex justify-between items-center p-2'>
@@ -23,7 +23,7 @@ export function CreateContentModal({
 
             {/* FORM */}
             <div>
-              <AddContentForm />
+              <AddContentForm open={open} onClose={onClose} />
             </div>
           </div>
         </div>

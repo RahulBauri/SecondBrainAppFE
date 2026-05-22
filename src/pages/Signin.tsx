@@ -5,18 +5,18 @@ import { InputBox } from '../components/ui/InputBox';
 import { BACKEND_URL } from '../config';
 import { useNavigate } from 'react-router-dom';
 
-export const Signup = () => {
+export const Signin = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  async function signup() {
+  async function signin() {
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
 
     try {
       const resp = await axios.post(
-        `${BACKEND_URL}/api/v1/signup`,
+        `${BACKEND_URL}/api/v1/signin`,
         {
           username,
           password,
@@ -24,10 +24,13 @@ export const Signup = () => {
         { withCredentials: true },
       );
 
-      const data = resp.data.message;
-      alert(data);
+      const data = resp.data;
+      const { message, token } = data;
+      alert(message);
+      // alert(token);
 
-      navigate('/signin');
+      localStorage.setItem('token', token);
+      navigate('/dashboard');
     } catch (error: any) {
       if (error.response?.status === 411) {
         const errors = error.response.data.errors.map((error: any) => {
@@ -45,18 +48,17 @@ export const Signup = () => {
   return (
     <div className='h-screen w-screen bg-gray-200 flex justify-center items-center'>
       <div className='bg-white rounded border min-win-48 w-100 h-100 p-4'>
-        <div className='font-bold text-xl text-center mb-4'>Signup</div>
+        <div className='font-bold text-xl text-center mb-4'>Signin</div>
         <div>
           <InputBox placeholder='Username' ref={usernameRef} />
           <InputBox placeholder='Password' ref={passwordRef} />
-          <div className='flex justify-center mt-4 p-2'>
+          <div className='flex justify-center mt-4'>
             <Button
               variant='primary'
               size='md'
-              text='Signup'
-              onClick={signup}
+              text='Signin'
+              onClick={signin}
               fullWidth={true}
-              loading={false}
             />
           </div>
         </div>
